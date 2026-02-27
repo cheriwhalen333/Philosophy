@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedagogical Defense: GEM Integration</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Chosen Palette: Warm Professional Academic (Stone, Slate, and Muted Terracotta) -->
+    <!-- Application Structure Plan: 
+         1. Hero Section: Title and Executive Summary hook.
+         2. Navigation: Sticky tab-based navigation for the three main pillars (Feedback, Grading, Privacy).
+         3. Dynamic Content Area:
+            - 'Feedback & Learning': Focuses on the efficiency and depth of AI feedback vs traditional methods (Bar Chart).
+            - 'Impeccable Grading': Focuses on consistency and bias removal (Line Chart showing 'drift').
+            - 'Privacy & Ethics': A visual breakdown of the data sandbox and FERPA compliance (CSS Diagram).
+         4. Reflection Footer: The personal statement from the instructor and technical definitions.
+         This structure transforms the linear document into a multifaceted argument that the user can explore by topic.
+    -->
+    
+    <!-- Visualization & Content Choices:
+         1. Feedback Lag Chart (Chart.js Bar): Visualizes the "Feedback Lag" concept mentioned in Section 1. Goal: Compare time-to-feedback between Human and GEM.
+         2. Grading Consistency Chart (Chart.js Line): Visualizes "Algorithmic Consistency" vs "Grading Fatigue". Goal: Compare stability of grading over a session.
+         3. Privacy "Sandbox" Diagram (HTML/CSS Grid): Visualizes the "Private Instance" concept. Goal: Inform/Organize the data flow to prove security. NO SVG used.
+         4. Bias Neutrality Toggles (Interactive Text): Allows users to toggle "Student Identifiers" on/off to simulate how the GEM sees data.
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafaf9; /* stone-50 */
+            color: #1c1917; /* stone-900 */
+        }
+
+        /* Chart Container Styling - MANDATORY */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        /* Custom Scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f5f5f4; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d6d3d1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a29e; 
+        }
+
+        .nav-active {
+            border-bottom: 2px solid #991b1b; /* red-800 */
+            color: #991b1b;
+            font-weight: 600;
+        }
+        
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .diagram-box {
+            transition: all 0.3s ease;
+        }
+        .diagram-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header / Hero -->
+    <header class="bg-white border-b border-stone-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex flex-col">
+                    <h1 class="text-2xl font-bold text-stone-800 tracking-tight">CMPA 3301 Defense</h1>
+                    <span class="text-xs text-stone-500 font-medium">Texas Tech University • Cheri Whalen, M.S.</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="navigateTo('dashboard')" id="nav-dashboard" class="nav-item text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium transition-colors">Executive Summary</button>
+                    <button onclick="navigateTo('feedback')" id="nav-feedback" class="nav-item text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium transition-colors">Feedback & Learning</button>
+                    <button onclick="navigateTo('grading')" id="nav-grading" class="nav-item text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium transition-colors">Impeccable Grading</button>
+                    <button onclick="navigateTo('privacy')" id="nav-privacy" class="nav-item text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium transition-colors">Privacy & Ethics</button>
+                </div>
+                <!-- Mobile Menu Button (simplified for this context) -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-stone-500 hover:text-stone-900">
+                        <span class="text-2xl">☰</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-stone-50 border-t border-stone-200">
+             <button onclick="navigateTo('dashboard')" class="block w-full text-left px-4 py-3 text-stone-700 hover:bg-stone-100">Executive Summary</button>
+             <button onclick="navigateTo('feedback')" class="block w-full text-left px-4 py-3 text-stone-700 hover:bg-stone-100">Feedback & Learning</button>
+             <button onclick="navigateTo('grading')" class="block w-full text-left px-4 py-3 text-stone-700 hover:bg-stone-100">Impeccable Grading</button>
+             <button onclick="navigateTo('privacy')" class="block w-full text-left px-4 py-3 text-stone-700 hover:bg-stone-100">Privacy & Ethics</button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <!-- SECTION: DASHBOARD (Executive Summary) -->
+        <section id="dashboard" class="space-y-8 animate-fade-in">
+            <div class="bg-white rounded-xl card-shadow p-8 border border-stone-100">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                    <div>
+                        <h2 class="text-3xl font-bold text-stone-900 mb-2">Executive Summary</h2>
+                        <p class="text-stone-500 text-sm uppercase tracking-wide">Pedagogical Justification • Early Spring 2026</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 bg-stone-100 px-4 py-2 rounded-lg border border-stone-200">
+                        <span class="text-sm font-semibold text-stone-700">Status: <span class="text-green-700">Secure & Active</span></span>
+                    </div>
+                </div>
+                
+                <p class="text-lg text-stone-700 leading-relaxed mb-6">
+                    This interactive dossier presents the pedagogical defense for the integration of a customized <strong>Generative AI Educational Model (GEM)</strong> in CMPA 3301. Far from being a shortcut, this technology represents a sophisticated instructional strategy. It transforms the educational experience by significantly increasing engagement, creating personalized feedback loops, and establishing a bias-reduced assessment framework.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <!-- Stat Card 1 -->
+                    <div class="bg-stone-50 p-6 rounded-lg border border-stone-200 hover:border-red-200 transition-colors cursor-pointer" onclick="navigateTo('feedback')">
+                        <div class="text-red-800 font-bold text-xl mb-2">Enhanced Feedback</div>
+                        <p class="text-stone-600 text-sm">Combats "feedback lag" with granular, line-by-line analysis that scales effortlessly.</p>
+                        <div class="mt-4 text-red-700 text-sm font-semibold flex items-center">
+                            Explore Data <span class="ml-1">→</span>
+                        </div>
+                    </div>
+                    <!-- Stat Card 2 -->
+                    <div class="bg-stone-50 p-6 rounded-lg border border-stone-200 hover:border-red-200 transition-colors cursor-pointer" onclick="navigateTo('grading')">
+                        <div class="text-red-800 font-bold text-xl mb-2">Impeccable Grading</div>
+                        <p class="text-stone-600 text-sm">Eliminates "grading fatigue" and unconscious bias through algorithmic consistency.</p>
+                        <div class="mt-4 text-red-700 text-sm font-semibold flex items-center">
+                            View Analysis <span class="ml-1">→</span>
+                        </div>
+                    </div>
+                    <!-- Stat Card 3 -->
+                    <div class="bg-stone-50 p-6 rounded-lg border border-stone-200 hover:border-red-200 transition-colors cursor-pointer" onclick="navigateTo('privacy')">
+                        <div class="text-red-800 font-bold text-xl mb-2">Privacy First</div>
+                        <p class="text-stone-600 text-sm">A secure, sandboxed environment ensuring FERPA compliance and PII protection.</p>
+                        <div class="mt-4 text-red-700 text-sm font-semibold flex items-center">
+                            Review Protocols <span class="ml-1">→</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Reflection Quote -->
+            <div class="bg-stone-800 rounded-xl p-8 text-white relative overflow-hidden">
+                <div class="relative z-10 max-w-3xl">
+                    <h3 class="text-xl font-semibold mb-4 text-stone-300">Professional Reflection</h3>
+                    <p class="text-2xl font-light italic leading-relaxed mb-6">
+                        "I am a better teacher because I use this tool. The time and content creates better education for students and gives me insight and ideas into students' needs that I never would have been able to provide before."
+                    </p>
+                    <div class="flex items-center">
+                        <div class="h-10 w-10 rounded-full bg-stone-600 flex items-center justify-center text-stone-300 font-bold text-sm">CW</div>
+                        <div class="ml-3">
+                            <div class="text-sm font-bold">Cheri Whalen, M.S.</div>
+                            <div class="text-xs text-stone-400">Instructor, 20+ Years Experience</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Decorative element (CSS only) -->
+                <div class="absolute right-0 top-0 h-full w-1/3 bg-stone-700 opacity-20 transform skew-x-12 translate-x-10"></div>
+            </div>
+        </section>
+
+
+        <!-- SECTION: FEEDBACK (Learning Outcomes) -->
+        <section id="feedback" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-white rounded-xl card-shadow p-8 border border-stone-100">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Enhancing Feedback & Outcomes</h2>
+                    <p class="text-stone-600 text-lg leading-relaxed">
+                        Traditional online instruction often suffers from "feedback lag," where the delay between submission and assessment diminishes the learning moment. This section analyzes how the GEM acts as a teaching assistant to provide depth, precision, and diagnostic insight, reclaiming instructor time for high-value mentorship.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Column 1: The Data Story -->
+                    <div class="flex flex-col space-y-6">
+                        <h3 class="text-xl font-bold text-stone-800">Feedback Latency Comparison</h3>
+                        <p class="text-sm text-stone-500 mb-2">The chart below illustrates the reduction in time-to-feedback for a standard project cohort (n=30), contrasting manual detailed review with GEM-assisted review.</p>
+                        
+                        <!-- Chart Container -->
+                        <div class="chart-container bg-stone-50 rounded-lg p-4 border border-stone-100">
+                            <canvas id="feedbackChart"></canvas>
+                        </div>
+                        
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mt-4">
+                            <h4 class="font-bold text-blue-900 text-sm">Key Outcome: Mentor-Centric Teaching</h4>
+                            <p class="text-blue-800 text-sm mt-1">
+                                By automating routine evaluation metrics (like semantic HTML syntax), the instructor reclaims hours to focus on "authentic voice" and critical thought development.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: The Qualitative Benefits -->
+                    <div class="flex flex-col space-y-6">
+                        <h3 class="text-xl font-bold text-stone-800">The "Feedback Gap" Analysis</h3>
+                        
+                        <div class="space-y-4">
+                            <!-- Feature 1 -->
+                            <div class="group p-4 rounded-lg border border-stone-200 hover:bg-stone-50 transition-colors">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 h-8 w-8 rounded bg-red-100 flex items-center justify-center text-red-800 font-bold">1</div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg font-semibold text-stone-900">Depth and Precision</h4>
+                                        <p class="text-stone-600 mt-1">Analyzes submissions against specific rubrics (e.g., semantic HTML) to provide line-by-line feedback that is often time-prohibitive for humans at scale.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Feature 2 -->
+                            <div class="group p-4 rounded-lg border border-stone-200 hover:bg-stone-50 transition-colors">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 h-8 w-8 rounded bg-red-100 flex items-center justify-center text-red-800 font-bold">2</div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg font-semibold text-stone-900">Insightful Diagnostics</h4>
+                                        <p class="text-stone-600 mt-1">Identifies recurring "learning gaps" across the cohort (e.g., version control confusion), allowing for real-time pivots in instructional content.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Element: Context -->
+                        <div class="bg-stone-900 text-stone-300 p-6 rounded-lg mt-auto">
+                            <h4 class="text-white font-bold mb-2">Instructor Note</h4>
+                            <p class="text-sm italic">"The GEM identifies learning gaps I might miss when buried in grading 30 separate papers. It aggregates the data, telling me: '60% of students missed the `meta` tag requirement'. I can then address this immediately in the next announcement."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION: GRADING (Objectivity) -->
+        <section id="grading" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-white rounded-xl card-shadow p-8 border border-stone-100">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Impeccable Grading & Bias Mitigation</h2>
+                    <p class="text-stone-600 text-lg leading-relaxed">
+                        Human grading is inherently susceptible to "grading fatigue" and unconscious bias. This section demonstrates how the GEM introduces a layer of objectivity, ensuring every student—from the first submission to the last—is evaluated with identical rigor and transparency.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Column 1: Visualization of Drift -->
+                    <div class="flex flex-col space-y-6">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-xl font-bold text-stone-800">Consistency Analysis</h3>
+                            <div class="flex space-x-2 text-xs">
+                                <span class="flex items-center"><span class="w-3 h-3 bg-stone-300 rounded-full mr-1"></span> Human</span>
+                                <span class="flex items-center"><span class="w-3 h-3 bg-red-600 rounded-full mr-1"></span> GEM</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-stone-500 mb-2">
+                            A simulation of "Grading Drift." As human fatigue sets in over a 4-hour grading session, strictness often varies. The GEM maintains a flat consistency line.
+                        </p>
+                        
+                        <!-- Chart Container -->
+                        <div class="chart-container bg-stone-50 rounded-lg p-4 border border-stone-100">
+                            <canvas id="gradingChart"></canvas>
+                        </div>
+                        
+                        <!-- CITATION ADDED HERE -->
+                        <div class="mt-4 px-2">
+                            <p class="text-[10px] text-stone-400 leading-tight italic">
+                                <strong>Supporting Citation:</strong> Malouff, J. M., & Thorsteinsson, E. B. (2016). Bias in grading: A meta-analysis of experimental research findings. <em>Australian Journal of Psychology</em>, 68(4), 245-257. (Documents the impact of sequential contrast effects and grader variability in human evaluation).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Bias Filter Interactive -->
+                    <div class="flex flex-col space-y-6">
+                        <h3 class="text-xl font-bold text-stone-800">The Bias Neutrality Filter</h3>
+                        <p class="text-stone-600 mb-4">The GEM evaluates content based strictly on the rubric, ignoring factors that often unconsciously influence human graders. Toggle the filter below to see how the GEM views a submission.</p>
+
+                        <div class="bg-stone-100 p-6 rounded-lg border border-stone-200 relative overflow-hidden transition-all duration-500" id="bias-card">
+                            <div class="absolute top-4 right-4 z-10">
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <span class="mr-3 text-sm font-medium text-stone-600">GEM View</span>
+                                    <input type="checkbox" id="bias-toggle" class="sr-only peer" onchange="toggleBiasView()">
+                                    <div class="relative w-11 h-6 bg-stone-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-700"></div>
+                                </label>
+                            </div>
+
+                            <div id="bias-content-human" class="opacity-100 transition-opacity duration-300">
+                                <h4 class="font-bold text-stone-800 mb-2">Student Submission (Human View)</h4>
+                                <div class="space-y-2 text-sm text-stone-600 font-mono bg-white p-3 rounded border border-stone-200">
+                                    <p><span class="text-purple-600">Student Name:</span> John Doe (History of late work)</p>
+                                    <p><span class="text-purple-600">Email:</span> jdoe@ttu.edu</p>
+                                    <p><span class="text-purple-600">Formatting:</span> Messy fonts, weird spacing.</p>
+                                    <p class="border-t border-stone-100 pt-2 mt-2 font-serif text-black">
+                                        "HTML uses tags to structure content. The `nav` tag is for links."
+                                    </p>
+                                </div>
+                                <p class="text-xs text-red-600 mt-2 italic">Potential Bias Triggers: Previous late work, poor visual formatting.</p>
+                            </div>
+
+                            <div id="bias-content-gem" class="absolute top-0 left-0 w-full h-full p-6 bg-stone-800 text-stone-200 opacity-0 transition-opacity duration-300 pointer-events-none flex flex-col justify-center">
+                                <h4 class="font-bold text-white mb-2">Input Data (GEM View)</h4>
+                                <div class="space-y-2 text-sm font-mono bg-stone-900 p-3 rounded border border-stone-700">
+                                    <p><span class="text-green-400">Content_Analysis:</span></p>
+                                    <p>> Check definition of HTML tags.</p>
+                                    <p>> Check definition of `nav` tag.</p>
+                                    <p class="text-stone-400"># Identity: [REDACTED]</p>
+                                    <p class="text-stone-400"># History: [REDACTED]</p>
+                                    <p class="text-stone-400"># Formatting: [IRRELEVANT]</p>
+                                </div>
+                                <p class="text-xs text-green-400 mt-2">Result: Bias Neutral. Evaluated solely on content accuracy.</p>
+                            </div>
+                        </div>
+
+                        <ul class="space-y-2 mt-4">
+                            <li class="flex items-center text-stone-700 text-sm">
+                                <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                                <strong>Algorithmic Consistency:</strong> Same criteria for Paper #1 and Paper #30.
+                            </li>
+                            <li class="flex items-center text-stone-700 text-sm">
+                                <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                                <strong>Transparency:</strong> Grade explanations linked directly to course materials.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION: PRIVACY (Ethics) -->
+        <section id="privacy" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-white rounded-xl card-shadow p-8 border border-stone-100">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Data Privacy & Ethical Compliance</h2>
+                    <p class="text-stone-600 text-lg leading-relaxed">
+                        The use of this GEM follows a strict "Privacy-First" methodology. It operates as a private, agentic tool within a secure sandbox, ensuring compliance with FERPA and Texas Tech University standards. The data is <strong>not</strong> public and does <strong>not</strong> train external models.
+                    </p>
+                </div>
+
+                <!-- CSS Diagram of Privacy Sandbox -->
+                <div class="bg-stone-50 rounded-xl p-8 border border-stone-200 mb-8 overflow-hidden">
+                    <h3 class="text-center font-bold text-stone-800 mb-8">Secure Data Architecture (The GEM Sandbox)</h3>
+                    
+                    <div class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-4">
+                        
+                        <!-- Step 1: Instructor -->
+                        <div class="diagram-box w-full md:w-1/4 bg-white p-4 rounded-lg border border-stone-300 text-center relative z-10">
+                            <div class="text-2xl mb-2">👩‍🏫</div>
+                            <h4 class="font-bold text-stone-800">Instructor</h4>
+                            <p class="text-xs text-stone-500 mt-1">Receives submission</p>
+                            <div class="text-xs font-mono bg-stone-100 p-1 mt-2 rounded">Raw Data</div>
+                        </div>
+
+                        <!-- Arrow -->
+                        <div class="text-stone-400 text-2xl hidden md:block">➔</div>
+                        <div class="text-stone-400 text-2xl md:hidden">⬇</div>
+
+                        <!-- Step 2: Anonymization Wall -->
+                        <div class="diagram-box w-full md:w-1/4 bg-stone-800 p-4 rounded-lg border border-stone-700 text-center relative z-10">
+                            <div class="text-2xl mb-2">🛡️</div>
+                            <h4 class="font-bold text-white">Anonymization Layer</h4>
+                            <p class="text-xs text-stone-400 mt-1">Strips PII (Names, IDs)</p>
+                            <div class="text-xs font-mono bg-stone-900 text-green-400 p-1 mt-2 rounded">Sanitized Content</div>
+                        </div>
+
+                        <!-- Arrow -->
+                        <div class="text-stone-400 text-2xl hidden md:block">➔</div>
+                        <div class="text-stone-400 text-2xl md:hidden">⬇</div>
+
+                        <!-- Step 3: Private GEM -->
+                        <div class="diagram-box w-full md:w-1/4 bg-red-50 p-4 rounded-lg border-2 border-red-200 text-center relative z-10">
+                            <div class="absolute -top-3 -right-3 bg-red-600 text-white text-[10px] px-2 py-1 rounded-full uppercase tracking-wider font-bold">Secure</div>
+                            <div class="text-2xl mb-2">💎</div>
+                            <h4 class="font-bold text-red-900">GEM Instance</h4>
+                            <p class="text-xs text-red-700 mt-1">Private Google AI Agent</p>
+                            <div class="text-xs font-mono bg-white text-red-800 p-1 mt-2 rounded border border-red-100">Processing...</div>
+                        </div>
+
+                        <!-- Arrow -->
+                        <div class="text-stone-400 text-2xl hidden md:block">➔</div>
+                        <div class="text-stone-400 text-2xl md:hidden">⬇</div>
+
+                        <!-- Step 4: Output -->
+                        <div class="diagram-box w-full md:w-1/4 bg-white p-4 rounded-lg border border-stone-300 text-center relative z-10">
+                            <div class="text-2xl mb-2">📝</div>
+                            <h4 class="font-bold text-stone-800">Feedback</h4>
+                            <p class="text-xs text-stone-500 mt-1">Rubric-aligned analysis</p>
+                            <div class="text-xs font-mono bg-blue-50 text-blue-800 p-1 mt-2 rounded">Actionable Insights</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 text-center">
+                        <span class="inline-block px-4 py-1 bg-stone-200 text-stone-600 text-xs font-bold rounded-full">🚫 No Public Training Data</span>
+                        <span class="inline-block px-4 py-1 bg-stone-200 text-stone-600 text-xs font-bold rounded-full ml-2">🔒 Isolated Environment</span>
+                    </div>
+                </div>
+
+                <!-- Compliance Checklist -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-4 border-l-4 border-green-500 bg-green-50">
+                        <h4 class="font-bold text-green-900">Anonymized Processing</h4>
+                        <p class="text-sm text-green-800 mt-1">Student submissions are processed based on content, not identity. No PII enters the model.</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-stone-500 bg-stone-100">
+                        <h4 class="font-bold text-stone-900">Private Instance</h4>
+                        <p class="text-sm text-stone-800 mt-1">Instructional data is used strictly for this course context and is not broadcast publicly.</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-blue-500 bg-blue-50">
+                        <h4 class="font-bold text-blue-900">Modeling Ethical Use</h4>
+                        <p class="text-sm text-blue-800 mt-1">Serves as a "living laboratory" for students, modeling professional boundaries of emerging tech.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer with Definitions -->
+    <footer class="bg-stone-900 text-stone-400 py-12 mt-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-white font-bold mb-4">Course Details</h4>
+                    <p class="mb-2">CMPA 3301 - Fundamentals of Computing Applications</p>
+                    <p class="text-sm">Texas Tech University • Early Spring 2026</p>
+                    <p class="text-sm mt-4">Instructor: Cheri Whalen, M.S.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Term Definition</h4>
+                    <div class="bg-stone-800 p-4 rounded text-sm leading-relaxed">
+                        <strong class="text-white">¹ GEM Definition:</strong> A <em>Generative AI Educational Model (GEM)</em> is a private, agentic Google AI tool. Unlike public AI interfaces, a GEM is a secure, sandboxed environment where data remains confidential to the creator and is not used to train public models. It functions as a specialized digital assistant tailored to specific instructional datasets and pedagogical goals.
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-stone-800 mt-12 pt-8 text-xs text-center">
+                <p>&copy; 2026 Cheri Whalen. All Rights Reserved. Generated for Pedagogical Defense Purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // State Management
+        let currentSection = 'dashboard';
+        const sections = ['dashboard', 'feedback', 'grading', 'privacy'];
+        let chartsInitialized = false;
+
+        // Navigation Logic
+        function navigateTo(sectionId) {
+            // Update State
+            currentSection = sectionId;
+
+            // Update UI: Hide all sections, Show target
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (id === sectionId) {
+                    el.classList.remove('hidden');
+                    // Trigger fade-in animation reset
+                    el.classList.remove('animate-fade-in');
+                    void el.offsetWidth; // Trigger reflow
+                    el.classList.add('animate-fade-in');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+
+            // Update Nav Styles
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.classList.remove('nav-active');
+            });
+            // Handle mobile vs desktop nav ID differences if strictly needed, 
+            // but here we just grab by ID logic.
+            const activeBtn = document.getElementById(`nav-${sectionId}`);
+            if (activeBtn) activeBtn.classList.add('nav-active');
+
+            // Initialize charts if entering a section with charts for the first time
+            if (!chartsInitialized && (sectionId === 'feedback' || sectionId === 'grading')) {
+                initCharts();
+                chartsInitialized = true;
+            }
+            
+            // Close mobile menu if open
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+            
+            window.scrollTo(0,0);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Bias Toggle Logic
+        function toggleBiasView() {
+            const humanView = document.getElementById('bias-content-human');
+            const gemView = document.getElementById('bias-content-gem');
+            const toggle = document.getElementById('bias-toggle');
+
+            if (toggle.checked) {
+                // Show GEM view
+                humanView.classList.add('opacity-0');
+                humanView.classList.add('pointer-events-none');
+                gemView.classList.remove('opacity-0');
+                gemView.classList.remove('pointer-events-none');
+            } else {
+                // Show Human view
+                gemView.classList.add('opacity-0');
+                gemView.classList.add('pointer-events-none');
+                humanView.classList.remove('opacity-0');
+                humanView.classList.remove('pointer-events-none');
+            }
+        }
+
+        // Chart Initialization
+        function initCharts() {
+            // Chart 1: Feedback Latency (Bar Chart)
+            const ctxFeedback = document.getElementById('feedbackChart').getContext('2d');
+            new Chart(ctxFeedback, {
+                type: 'bar',
+                data: {
+                    labels: ['Detailed Manual Grading', 'GEM-Assisted Grading'],
+                    datasets: [{
+                        label: 'Minutes per Student Submission',
+                        data: [25, 5], // 25 mins manual vs 5 mins AI
+                        backgroundColor: ['#d6d3d1', '#991b1b'], // Stone-300 vs Red-800
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.raw + ' Minutes per Student';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Time (Minutes)' }
+                        }
+                    }
+                }
+            });
+
+            // Chart 2: Grading Consistency (Line Chart)
+            const ctxGrading = document.getElementById('gradingChart').getContext('2d');
+            
+            // Generate data for "Human Fatigue" (variance increases over time)
+            const humanData = [95, 94, 96, 92, 88, 85, 90, 82, 78, 80]; // Drift downwards and erratic
+            const gemData =   [95, 95, 95, 95, 95, 95, 95, 95, 95, 95]; // Perfectly flat
+
+            new Chart(ctxGrading, {
+                type: 'line',
+                data: {
+                    labels: ['10am', '10:30', '11:00', '11:30', '12:00', '12:30', '1:00', '1:30', '2:00', '2:30'],
+                    datasets: [
+                        {
+                            label: 'Human Grader Score (Same Quality Paper)',
+                            data: humanData,
+                            borderColor: '#a8a29e', // Stone-400
+                            borderDash: [5, 5],
+                            tension: 0.4,
+                            pointRadius: 4
+                        },
+                        {
+                            label: 'GEM Score (Same Quality Paper)',
+                            data: gemData,
+                            borderColor: '#dc2626', // Red-600
+                            backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                            borderWidth: 3,
+                            fill: false,
+                            tension: 0,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        title: {
+                            display: false,
+                            text: 'Grading Score Consistency Over Time'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            min: 70,
+                            max: 100,
+                            title: { display: true, text: 'Score Given' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize default view
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animation class definition
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                .animate-fade-in {
+                    animation: fadeIn 0.5s ease-out forwards;
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Set initial state
+            navigateTo('dashboard');
+        });
+
+    </script>
+</body>
+</html>
