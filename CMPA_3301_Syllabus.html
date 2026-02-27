@@ -3,221 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syllabus | CMPA 3301 Fundamentals of Computing Applications</title>
+    <title>Full Syllabus | CMPA 3301 Fundamentals of Computing Applications</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #fafaf9; color: #1c1917; }
-        .ttu-red { color: #991b1b; }
-        .ttu-bg-red { background-color: #991b1b; }
-        .sticky-nav { position: sticky; top: 0; z-index: 50; background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #fafaf9; color: #1c1917; scroll-behavior: smooth; }
+        .ttu-red { color: #cc0000; }
+        .ttu-bg-red { background-color: #cc0000; }
+        .section-card { background: white; border: 1px solid #e7e5e4; border-radius: 1rem; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .sticky-nav { position: sticky; top: 0; z-index: 50; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .policy-link { color: #cc0000; font-weight: 500; text-decoration: underline; transition: opacity 0.2s; }
+        .policy-link:hover { opacity: 0.7; }
+        .toc-link { display: block; padding: 0.5rem 0; color: #57534e; font-size: 0.875rem; transition: color 0.2s; }
+        .toc-link:hover { color: #cc0000; }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
     <!-- Sticky Navigation -->
     <nav class="sticky-nav border-b border-stone-200">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <a href="index.html" class="flex items-center text-stone-600 hover:text-red-800 transition-colors">
-                    <span class="mr-2">←</span> 
-                    <span class="text-sm font-semibold uppercase tracking-wider">Back to Hub</span>
+                <a href="index.html" class="flex items-center text-stone-600 hover:text-red-800 transition-colors font-semibold">
+                    <span class="mr-2">←</span> Hub
                 </a>
-                <span class="text-xs font-bold text-stone-400 uppercase tracking-[0.2em]">Course Syllabus</span>
+                <div class="hidden lg:flex space-x-6">
+                    <a href="#outcomes" class="text-xs font-bold text-stone-500 uppercase tracking-widest hover:text-red-700">Outcomes</a>
+                    <a href="#grading" class="text-xs font-bold text-stone-500 uppercase tracking-widest hover:text-red-700">Grading</a>
+                    <a href="#projects" class="text-xs font-bold text-stone-500 uppercase tracking-widest hover:text-red-700">Projects</a>
+                    <a href="#ai-policy" class="text-xs font-bold text-stone-500 uppercase tracking-widest hover:text-red-700 text-red-700">AI Policy</a>
+                </div>
+                <div class="text-xs font-bold text-stone-400 uppercase tracking-[0.2em]">Official Syllabus</div>
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-4 gap-12">
         
-        <!-- Header Section -->
-        <header class="mb-16 border-b border-stone-200 pb-12">
-            <h1 class="text-4xl font-bold text-stone-900 mb-2">CMPA 3301, D01</h1>
-            <p class="text-sm font-bold text-stone-400 uppercase tracking-widest mb-6">Early Spring 2026 • TTU Online Course Syllabus</p>
-            <h2 class="text-2xl font-light text-stone-600 mb-8">Fundamentals of Computing Applications</h2>
+        <!-- Sidebar Navigation (Desktop) -->
+        <aside class="hidden lg:block">
+            <div class="sticky top-28 space-y-8">
+                <div>
+                    <h4 class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-4">Contents</h4>
+                    <nav class="space-y-1">
+                        <a href="#header" class="toc-link">Course Information</a>
+                        <a href="#description" class="toc-link">Course Description</a>
+                        <a href="#outcomes" class="toc-link">Learning Outcomes</a>
+                        <a href="#grading" class="toc-link">Assignments & Grades</a>
+                        <a href="#projects" class="toc-link">Project Details</a>
+                        <a href="#attendance" class="toc-link">Attendance & Participation</a>
+                        <a href="#late-policy" class="toc-link">Late Assignment Policy</a>
+                        <a href="#ai-policy" class="toc-link font-bold text-red-800">AI Policy (Detailed)</a>
+                        <a href="#decorum" class="toc-link">Classroom Decorum</a>
+                        <a href="#statements" class="toc-link">University Statements</a>
+                    </nav>
+                </div>
+                <div class="p-4 bg-stone-100 rounded-lg border border-stone-200">
+                    <p class="text-xs text-stone-500 leading-relaxed">
+                        <strong>Response Time:</strong><br>
+                        24h Weekdays<br>
+                        48h Weekends
+                    </p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="lg:col-span-3">
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div class="space-y-4">
+            <!-- Header Section -->
+            <header id="header" class="mb-12">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-stone-200 pb-8 mb-8">
                     <div>
-                        <p class="text-xs font-bold uppercase text-stone-400 tracking-widest mb-1">Instructor</p>
-                        <p class="text-lg font-semibold">Cheri Whalen, M.S.</p>
-                        <p class="text-stone-600 text-sm">Email: <a href="mailto:Cheri.Whalen@ttu.edu" class="text-red-800 hover:underline font-medium">Cheri.Whalen@ttu.edu</a></p>
-                        <p class="text-xs text-stone-500 italic mt-1">* Please email me using your TTU email address.</p>
+                        <h1 class="text-5xl font-extrabold text-stone-900 tracking-tight mb-2">CMPA 3301, D01</h1>
+                        <p class="text-xl font-light text-stone-500">Early Spring 2026 • TTU Online Course Syllabus</p>
                     </div>
-                    <div>
-                        <p class="text-xs font-bold uppercase text-stone-400 tracking-widest mb-1">Office Hours</p>
-                        <p class="text-stone-700 text-sm">Available by appointment.</p>
-                        <a href="#" class="text-red-800 text-sm font-semibold hover:underline">Request Video Meeting</a>
+                    <div class="mt-4 md:mt-0 text-right">
+                        <span class="bg-red-50 text-red-800 text-xs font-bold px-3 py-1 rounded-full border border-red-100">Official Instructional Copy</span>
                     </div>
                 </div>
-                <div class="space-y-4">
-                    <div>
-                        <p class="text-xs font-bold uppercase text-stone-400 tracking-widest mb-1">Logistics</p>
-                        <p class="text-stone-700 text-sm">Location: Online</p>
-                        <p class="text-stone-700 text-sm">Response Time: 24h weekdays / 48h weekends</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-8 rounded-2xl border border-stone-200 shadow-sm">
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase text-stone-400 tracking-[0.2em] mb-1">Instructor Name</p>
+                            <p class="text-xl font-bold text-stone-800">Cheri Whalen, M.S.</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold uppercase text-stone-400 tracking-[0.2em] mb-1">Contact</p>
+                            <p class="text-stone-700">Email: <a href="mailto:Cheri.Whalen@ttu.edu" class="policy-link">Cheri.Whalen@ttu.edu</a></p>
+                            <p class="text-xs text-stone-500 mt-1 italic">Please use your TTU email address for all correspondence.</p>
+                        </div>
                     </div>
-                    <div>
-                        <p class="text-xs font-bold uppercase text-stone-400 tracking-widest mb-1">Canvas Website</p>
-                        <a href="https://texastech.instructure.com" target="_blank" class="text-red-800 text-sm font-semibold hover:underline">texastech.instructure.com</a>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase text-stone-400 tracking-[0.2em] mb-1">Office Hours & Canvas</p>
+                            <p class="text-stone-700">By appointment: <a href="mailto:Cheri.Whalen@ttu.edu?subject=Video Meeting Request - CMPA 3301" class="policy-link">Request Video Meeting</a></p>
+                            <p class="text-stone-700 mt-2">Portal: <a href="https://texastech.instructure.com" target="_blank" class="policy-link">texastech.instructure.com</a></p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold uppercase text-stone-400 tracking-[0.2em] mb-1">Location</p>
+                            <p class="text-stone-700 font-medium">Online (TTU Online)</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </header>
+            </header>
 
-        <!-- Course Description -->
-        <section class="mb-16">
-            <h3 class="text-xl font-bold text-stone-900 mb-6 flex items-center">
-                <span class="w-8 h-px bg-red-800 mr-4"></span> Course Description
-            </h3>
-            <p class="text-stone-700 leading-relaxed text-lg italic bg-white p-8 rounded-2xl border border-stone-100 shadow-sm">
-                This course introduces and explores fundamental concepts of computing applications, current and emerging practices, theories, technologies, and related environments, fields, and professions.
-            </p>
-        </section>
-
-        <!-- Learning Outcomes -->
-        <section class="mb-16">
-            <h3 class="text-xl font-bold text-stone-900 mb-6 flex items-center">
-                <span class="w-8 h-px bg-red-800 mr-4"></span> Course Learning Outcomes
-            </h3>
-            <p class="text-stone-500 text-sm mb-6">Upon completion of this course, the student should be able to:</p>
-            <div class="grid grid-cols-1 gap-4">
-                <div class="flex items-start p-5 bg-white rounded-xl border border-stone-200 hover:border-red-200 transition-colors">
-                    <span class="font-bold text-red-800 mr-4 text-lg">01</span>
-                    <p class="text-stone-700">Analyze current and emerging trends in computing applications, identifying their potential impact on various industries and professions.</p>
-                </div>
-                <div class="flex items-start p-5 bg-white rounded-xl border border-stone-200 hover:border-red-200 transition-colors">
-                    <span class="font-bold text-red-800 mr-4 text-lg">02</span>
-                    <p class="text-stone-700">Apply fundamental computing concepts to solve basic problems in diverse application areas.</p>
-                </div>
-                <div class="flex items-start p-5 bg-white rounded-xl border border-stone-200 hover:border-red-200 transition-colors">
-                    <span class="font-bold text-red-800 mr-4 text-lg">03</span>
-                    <p class="text-stone-700">Evaluate the appropriateness of different computing technologies for specific use cases and environments.</p>
-                </div>
-                <div class="flex items-start p-5 bg-white rounded-xl border border-stone-200 hover:border-red-200 transition-colors">
-                    <span class="font-bold text-red-800 mr-4 text-lg">04</span>
-                    <p class="text-stone-700">Demonstrate proficiency in using essential tools and platforms common across various computing applications.</p>
-                </div>
-                <div class="flex items-start p-5 bg-white rounded-xl border border-stone-200 hover:border-red-200 transition-colors">
-                    <span class="font-bold text-red-800 mr-4 text-lg">05</span>
-                    <p class="text-stone-700">Articulate the relationships between different fields within computing applications, including their shared principles and unique characteristics.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Assessment Methods -->
-        <section class="mb-16">
-            <h3 class="text-xl font-bold text-stone-900 mb-6 flex items-center">
-                <span class="w-8 h-px bg-red-800 mr-4"></span> Methods for Assessment
-            </h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-stone-100 p-4 rounded-lg text-center border border-stone-200">
-                    <p class="text-sm font-bold text-stone-700">Online Discussions</p>
-                </div>
-                <div class="bg-stone-100 p-4 rounded-lg text-center border border-stone-200">
-                    <p class="text-sm font-bold text-stone-700">Exercises</p>
-                </div>
-                <div class="bg-stone-100 p-4 rounded-lg text-center border border-stone-200">
-                    <p class="text-sm font-bold text-stone-700">Assignments</p>
-                </div>
-                <div class="bg-stone-100 p-4 rounded-lg text-center border border-stone-200">
-                    <p class="text-sm font-bold text-stone-700">Projects</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Grading & Assessments Table -->
-        <section class="mb-16">
-            <h3 class="text-xl font-bold text-stone-900 mb-6 flex items-center">
-                <span class="w-8 h-px bg-red-800 mr-4"></span> Grading Overview
-            </h3>
-            <div class="overflow-hidden rounded-2xl border border-stone-200 shadow-sm">
-                <table class="w-full text-left bg-white">
-                    <thead class="bg-stone-50 border-b border-stone-200">
-                        <tr>
-                            <th class="px-6 py-4 text-xs font-bold uppercase text-stone-500 tracking-widest">Assignment Type</th>
-                            <th class="px-6 py-4 text-xs font-bold uppercase text-stone-500 tracking-widest text-right">Weight</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-stone-100">
-                        <tr>
-                            <td class="px-6 py-4 text-stone-700">Online Discussions (x7)</td>
-                            <td class="px-6 py-4 text-stone-900 font-semibold text-right">20%</td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 text-stone-700">Exercises (x6)</td>
-                            <td class="px-6 py-4 text-stone-900 font-semibold text-right">10%</td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 text-stone-700">Assignments (x4)</td>
-                            <td class="px-6 py-4 text-stone-900 font-semibold text-right">20%</td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 text-stone-700 text-sm">Project 01: Personal Webpage</td>
-                            <td class="px-6 py-4 text-stone-900 font-semibold text-right">10%</td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 text-stone-700 text-sm">Project 02: Professional Repository</td>
-                            <td class="px-6 py-4 text-stone-900 font-semibold text-right">15%</td>
-                        </tr>
-                        <tr class="bg-stone-50">
-                            <td class="px-6 py-4 text-stone-900 font-bold">Project 03: Full Project Proposal</td>
-                            <td class="px-6 py-4 text-red-800 font-bold text-right">25%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- AI Policy -->
-        <section class="mb-16 bg-stone-900 text-stone-300 p-10 rounded-3xl shadow-2xl relative overflow-hidden">
-            <div class="relative z-10">
-                <h3 class="text-xl font-bold text-white mb-6 flex items-center">
-                    <span class="w-8 h-px bg-red-600 mr-4"></span> Artificial Intelligence Policy
+            <!-- Course Description -->
+            <section id="description" class="section-card">
+                <h3 class="text-xl font-bold text-stone-900 mb-6 flex items-center uppercase tracking-widest text-sm">
+                    <span class="w-8 h-px bg-red-800 mr-4"></span> Course Description
                 </h3>
-                <p class="mb-8 leading-relaxed text-lg">
-                    <span class="text-white font-semibold">"A paper generated from an AI source will receive a zero. I want to hear your authentic voice and understand your critical thought."</span>
+                <p class="text-stone-700 leading-relaxed text-lg italic">
+                    This course introduces and explores fundamental concepts of computing applications, current and emerging practices, theories, technologies, and related environments, fields, and professions.
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-sm">
+            </section>
+
+            <!-- Learning Outcomes -->
+            <section id="outcomes" class="section-card">
+                <h3 class="text-xl font-bold text-stone-900 mb-6 flex items-center uppercase tracking-widest text-sm">
+                    <span class="w-8 h-px bg-red-800 mr-4"></span> Course Learning Outcomes
+                </h3>
+                <p class="text-stone-500 text-sm mb-6">Upon completion of this course, the student should be able to:</p>
+                <div class="space-y-4">
+                    <div class="flex items-start p-4 bg-stone-50 rounded-lg border border-stone-100">
+                        <span class="font-bold text-red-800 mr-4">1.</span>
+                        <p class="text-stone-700 text-sm">Analyze current and emerging trends in computing applications, identifying their potential impact on various industries and professions.</p>
+                    </div>
+                    <div class="flex items-start p-4 bg-stone-50 rounded-lg border border-stone-100">
+                        <span class="font-bold text-red-800 mr-4">2.</span>
+                        <p class="text-stone-700 text-sm">Apply fundamental computing concepts to solve basic problems in diverse application areas.</p>
+                    </div>
+                    <div class="flex items-start p-4 bg-stone-50 rounded-lg border border-stone-100">
+                        <span class="font-bold text-red-800 mr-4">3.</span>
+                        <p class="text-stone-700 text-sm">Evaluate the appropriateness of different computing technologies for specific use cases and environments.</p>
+                    </div>
+                    <div class="flex items-start p-4 bg-stone-50 rounded-lg border border-stone-100">
+                        <span class="font-bold text-red-800 mr-4">4.</span>
+                        <p class="text-stone-700 text-sm">Demonstrate proficiency in using essential tools and platforms common across various computing applications.</p>
+                    </div>
+                    <div class="flex items-start p-4 bg-stone-50 rounded-lg border border-stone-100">
+                        <span class="font-bold text-red-800 mr-4">5.</span>
+                        <p class="text-stone-700 text-sm">Articulate the relationships between different fields within computing applications, including their shared principles and unique characteristics.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Grading Overview -->
+            <section id="grading" class="section-card">
+                <h3 class="text-xl font-bold text-stone-900 mb-6 flex items-center uppercase tracking-widest text-sm">
+                    <span class="w-8 h-px bg-red-800 mr-4"></span> Overview of Assignments & Grades
+                </h3>
+                <div class="overflow-x-auto rounded-lg border border-stone-200">
+                    <table class="w-full text-left bg-white">
+                        <thead class="bg-stone-50">
+                            <tr>
+                                <th class="px-6 py-4 text-xs font-bold uppercase text-stone-500">Component</th>
+                                <th class="px-6 py-4 text-xs font-bold uppercase text-stone-500 text-right">Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-100">
+                            <tr><td class="px-6 py-4 text-stone-700">Online Discussions x 7</td><td class="px-6 py-4 text-stone-900 font-semibold text-right">20%</td></tr>
+                            <tr><td class="px-6 py-4 text-stone-700">Exercises x 6</td><td class="px-6 py-4 text-stone-900 font-semibold text-right">10%</td></tr>
+                            <tr><td class="px-6 py-4 text-stone-700">Assignments x 4</td><td class="px-6 py-4 text-stone-900 font-semibold text-right">20%</td></tr>
+                            <tr><td class="px-6 py-4 text-stone-700 font-medium">Project 01: Personal Introduction Webpage</td><td class="px-6 py-4 text-stone-900 font-semibold text-right">10%</td></tr>
+                            <tr><td class="px-6 py-4 text-stone-700 font-medium">Project 02: Professional Project Repository</td><td class="px-6 py-4 text-stone-900 font-semibold text-right">15%</td></tr>
+                            <tr><td class="px-6 py-4 text-red-800 font-bold">Project 03: Full Project Proposal</td><td class="px-6 py-4 text-red-800 font-bold text-right">25%</td></tr>
+                            <tr class="bg-stone-50"><td class="px-6 py-4 font-bold">Total</td><td class="px-6 py-4 font-bold text-right">100%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <h4 class="text-white font-bold mb-3 uppercase tracking-widest text-xs">Appropriate Uses</h4>
-                        <ul class="space-y-2 text-stone-400">
-                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-red-600 rounded-full mr-3"></span> Assignment Understanding</li>
-                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-red-600 rounded-full mr-3"></span> Getting feedback on draft work</li>
-                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-red-600 rounded-full mr-3"></span> Learning Support (explaining concepts)</li>
-                        </ul>
+                        <h4 class="font-bold text-stone-800 mb-2">Grading Scale</h4>
+                        <div class="flex space-x-4 text-sm">
+                            <span class="bg-stone-100 px-2 py-1 rounded">A: 90-100</span>
+                            <span class="bg-stone-100 px-2 py-1 rounded">B: 80-89</span>
+                            <span class="bg-stone-100 px-2 py-1 rounded">C: 70-79</span>
+                            <span class="bg-stone-100 px-2 py-1 rounded">D: 60-69</span>
+                            <span class="bg-stone-100 px-2 py-1 rounded">F: < 60</span>
+                        </div>
                     </div>
                     <div>
-                        <h4 class="text-white font-bold mb-3 uppercase tracking-widest text-xs text-red-500">Inappropriate Uses</h4>
-                        <ul class="space-y-2 text-stone-400">
-                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-stone-600 rounded-full mr-3"></span> Direct copying of AI content</li>
-                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-stone-600 rounded-full mr-3"></span> Having AI write/complete tasks</li>
-                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-stone-600 rounded-full mr-3"></span> Circumventing learning objectives</li>
+                        <h4 class="font-bold text-stone-800 mb-2">Required Textbook</h4>
+                        <p class="text-xs text-stone-600 italic">Kogon, K., Blakemore, S. (2024). Project Management for the Unofficial Project Manager. ISBN# 9781637740507</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Discussion & Project Details -->
+            <section id="projects" class="section-card space-y-8">
+                <div>
+                    <h3 class="text-xl font-bold text-stone-900 mb-6 flex items-center uppercase tracking-widest text-sm">
+                        <span class="w-8 h-px bg-red-800 mr-4"></span> Project & Assessment Details
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-stone-900 mb-2">Online Discussion Questions</h4>
+                            <p class="text-sm text-stone-600 leading-relaxed mb-4">
+                                Critical component of the course. Initial postings due by 11:59 p.m. Wednesday; replies to at least two classmates due by Sunday.
+                            </p>
+                            <div class="bg-stone-50 p-4 rounded-lg border border-stone-200 text-xs">
+                                <p><strong>Format:</strong> "Week X DQ, Name". Include accurate info, APA citations, and constructive feedback.</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="p-4 border border-stone-100 rounded-lg">
+                                <h5 class="font-bold text-stone-800 text-sm mb-1">Exercises</h5>
+                                <p class="text-xs text-stone-500">Reinforcement activities. Pass/Fail based on 70% output completion. Each worth 20 pts.</p>
+                            </div>
+                            <div class="p-4 border border-stone-100 rounded-lg">
+                                <h5 class="font-bold text-stone-800 text-sm mb-1">Assignments</h5>
+                                <p class="text-xs text-stone-500">Moderate-scope tasks integrating concepts to solve practical problems.</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="bg-white border-l-4 border-red-800 p-4 shadow-sm">
+                                <h5 class="font-bold text-stone-900">Project 01: Personal Introduction Webpage</h5>
+                                <p class="text-xs text-stone-600 mt-1">Foundational project focusing on semantic HTML and technical project scoping documentation.</p>
+                            </div>
+                            <div class="bg-white border-l-4 border-red-800 p-4 shadow-sm">
+                                <h5 class="font-bold text-stone-900">Project 02: Professional Project Repository</h5>
+                                <p class="text-xs text-stone-600 mt-1">Midterm project requiring GitHub version control and live URL publication via professional workflows.</p>
+                            </div>
+                            <div class="bg-stone-900 text-white p-6 rounded-xl">
+                                <h5 class="font-bold text-red-500 mb-2">Project 03: Full Project Proposal (Final)</h5>
+                                <p class="text-sm text-stone-400">Summative assessment. Students manage a website project from conception to completion, including full scoping, planning, retrospective documentation, and a functional two-page website prototype.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Policy Sections -->
+            <section id="attendance" class="section-card">
+                <h3 class="text-xl font-bold text-stone-900 mb-6 flex items-center uppercase tracking-widest text-sm">
+                    <span class="w-8 h-px bg-red-800 mr-4"></span> Attendance & Participation
+                </h3>
+                <div class="space-y-4 text-sm text-stone-600 leading-relaxed">
+                    <p><strong>Online Attendance:</strong> Defined by consistent login and progression through scheduled content. Tracked via Raider Success Hub.</p>
+                    <p><strong>Approved Absences:</strong> University trips require advance notice. Illness/Death notifications handled via the Dean of Students Office (for absences of 4+ consecutive days). Excused status is at the discretion of the instructor.</p>
+                </div>
+            </section>
+
+            <section id="late-policy" class="section-card">
+                <h3 class="text-xl font-bold text-stone-900 mb-6 flex items-center uppercase tracking-widest text-sm">
+                    <span class="w-8 h-px bg-red-800 mr-4"></span> Late Assignment Policy
+                </h3>
+                <div class="bg-red-50 p-6 rounded-xl border border-red-100">
+                    <p class="text-stone-800 text-sm leading-relaxed font-medium">
+                        Assignments are late after 11:59 PM CST on the due date. 
+                    </p>
+                    <ul class="list-disc list-inside mt-4 text-sm text-stone-700 space-y-2">
+                        <li>10% deduction for assignments up to one week late.</li>
+                        <li>No assignments accepted after one week past due date.</li>
+                        <li>Instructor permission for extensions granted only for extraordinary circumstances.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Detailed AI Policy -->
+            <section id="ai-policy" class="bg-stone-900 text-stone-300 p-10 rounded-3xl shadow-2xl relative overflow-hidden mb-12">
+                <div class="relative z-10">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <span class="w-12 h-px bg-red-600 mr-4"></span> Artificial Intelligence Policy
+                    </h3>
+                    <p class="text-lg text-white font-medium mb-8 leading-relaxed">
+                        "A paper generated from an AI source will receive a zero. I want to hear your authentic voice and understand your critical thought. You can use AI as a learning tool, but not a shortcut."
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <!-- Appropriate -->
+                        <div>
+                            <h4 class="text-red-500 font-bold uppercase tracking-widest text-xs mb-4">1. Appropriate Uses</h4>
+                            <div class="space-y-4 text-sm">
+                                <div>
+                                    <p class="text-white font-semibold">Assignment Understanding</p>
+                                    <p class="text-stone-400">Breaking down complex prompts; clarifying terms.</p>
+                                </div>
+                                <div>
+                                    <p class="text-white font-semibold">Draft Feedback</p>
+                                    <p class="text-stone-400">Identifying weak areas; structure suggestions.</p>
+                                </div>
+                                <div>
+                                    <p class="text-white font-semibold">Learning Support</p>
+                                    <p class="text-stone-400">Explanations of difficult concepts; sample problems.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Inappropriate -->
+                        <div>
+                            <h4 class="text-red-500 font-bold uppercase tracking-widest text-xs mb-4">5. Inappropriate Uses</h4>
+                            <div class="space-y-2 text-sm">
+                                <p class="flex items-center"><span class="w-1 h-1 bg-red-600 rounded-full mr-3"></span> Direct copying of AI content</p>
+                                <p class="flex items-center"><span class="w-1 h-1 bg-red-600 rounded-full mr-3"></span> Having AI write papers or tasks</p>
+                                <p class="flex items-center"><span class="w-1 h-1 bg-red-600 rounded-full mr-3"></span> Circumventing learning objectives</p>
+                                <p class="flex items-center"><span class="w-1 h-1 bg-red-600 rounded-full mr-3"></span> Submitting AI work as your own</p>
+                                <p class="flex items-center"><span class="w-1 h-1 bg-red-600 rounded-full mr-3"></span> Hiding AI use when disclosure is required</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-10 border-t border-stone-800 pt-10">
+                        <div>
+                            <h4 class="text-stone-100 font-bold text-sm mb-4">Ethical Guidelines</h4>
+                            <p class="text-xs leading-relaxed text-stone-400">
+                                Always disclose AI use. Write original content first. Verify all factual claims and citations. Use AI to enhance understanding, not replace thinking.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="text-stone-100 font-bold text-sm mb-4">Best Practices</h4>
+                            <p class="text-xs leading-relaxed text-stone-400">
+                                Brainstorm ideas and outline approaches. Use it for constructive criticism or to explain concepts in different ways. Keep documentation of how AI was used.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-red-900 rounded-full opacity-5"></div>
+            </section>
+
+            <!-- Decorum -->
+            <section id="decorum" class="section-card">
+                <h3 class="text-xl font-bold text-stone-900 mb-6 flex items-center uppercase tracking-widest text-sm">
+                    <span class="w-8 h-px bg-red-800 mr-4"></span> Online Classroom Decorum
+                </h3>
+                <div class="space-y-4 text-sm text-stone-600 leading-relaxed">
+                    <p>Expectation of cooperation, professionalism, respect, and civility. Disruptive behavior may result in disciplinary referrals pursuant to the TTU Code of Student Conduct.</p>
+                    <div class="bg-stone-50 p-4 rounded-lg">
+                        <p class="font-bold text-stone-800 mb-2">Disruptive Behavior Examples:</p>
+                        <ul class="list-disc list-inside space-y-1 text-xs">
+                            <li>Off-topic comments disrupting flow</li>
+                            <li>Participating in "Zoom bombing" or sharing links with non-students</li>
+                            <li>Spamming/Hacking platforms for commercial use</li>
+                            <li>Cyberbullying or online harassment</li>
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div class="absolute -bottom-16 -right-16 w-64 h-64 bg-red-900 rounded-full opacity-10"></div>
-        </section>
+            </section>
 
-        <!-- Final University Note -->
-        <section class="border-t border-stone-200 pt-12 text-center">
-            <p class="text-stone-400 text-xs font-bold uppercase tracking-widest mb-6">Required Syllabus Statements</p>
-            <div class="flex flex-wrap justify-center gap-6 text-[10px] text-stone-500 uppercase tracking-widest font-bold">
-                <span class="hover:text-red-800 cursor-help transition-colors">Academic Integrity</span>
-                <span class="hover:text-red-800 cursor-help transition-colors">ADA Statement</span>
-                <span class="hover:text-red-800 cursor-help transition-colors">Holy Days</span>
-                <span class="hover:text-red-800 cursor-help transition-colors">Civility Statement</span>
-                <span class="hover:text-red-800 cursor-help transition-colors">Plagiarism</span>
-            </div>
-        </section>
+            <!-- Statements & Active Links -->
+            <section id="statements" class="section-card">
+                <h3 class="text-xl font-bold text-stone-900 mb-6 flex items-center uppercase tracking-widest text-sm">
+                    <span class="w-8 h-px bg-red-800 mr-4"></span> University Required Statements
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="https://www.depts.ttu.edu/dos/" target="_blank" class="p-3 bg-stone-100 rounded hover:bg-red-50 transition-colors text-xs font-semibold text-stone-700 flex justify-between">
+                        Academic Integrity <span>↗</span>
+                    </a>
+                    <a href="https://www.depts.ttu.edu/hr/PregnantStudents.php" target="_blank" class="p-3 bg-stone-100 rounded hover:bg-red-50 transition-colors text-xs font-semibold text-stone-700 flex justify-between">
+                        Accommodation for Pregnant Students <span>↗</span>
+                    </a>
+                    <a href="https://www.depts.ttu.edu/sds/" target="_blank" class="p-3 bg-stone-100 rounded hover:bg-red-50 transition-colors text-xs font-semibold text-stone-700 flex justify-between">
+                        ADA Statement <span>↗</span>
+                    </a>
+                    <a href="https://www.depts.ttu.edu/provost/religious-holy-days.php" target="_blank" class="p-3 bg-stone-100 rounded hover:bg-red-50 transition-colors text-xs font-semibold text-stone-700 flex justify-between">
+                        Observance of Holy Days <span>↗</span>
+                    </a>
+                    <a href="https://www.depts.ttu.edu/dos/civility.php" target="_blank" class="p-3 bg-stone-100 rounded hover:bg-red-50 transition-colors text-xs font-semibold text-stone-700 flex justify-between">
+                        Civility Statement <span>↗</span>
+                    </a>
+                    <a href="https://www.depts.ttu.edu/titleix/" target="_blank" class="p-3 bg-stone-100 rounded hover:bg-red-50 transition-colors text-xs font-semibold text-stone-700 flex justify-between">
+                        Discrimination & Sexual Violence <span>↗</span>
+                    </a>
+                    <a href="https://www.depts.ttu.edu/dos/foodinsecurity.php" target="_blank" class="p-3 bg-stone-100 rounded hover:bg-red-50 transition-colors text-xs font-semibold text-stone-700 flex justify-between">
+                        Food Insecurity Statement <span>↗</span>
+                    </a>
+                    <a href="https://www.depts.ttu.edu/dos/recovery.php" target="_blank" class="p-3 bg-stone-100 rounded hover:bg-red-50 transition-colors text-xs font-semibold text-stone-700 flex justify-between">
+                        Recovery Services <span>↗</span>
+                    </a>
+                </div>
+                <p class="mt-8 text-center text-stone-400 text-[10px] tracking-widest uppercase">
+                    From Here, It’s Possible.
+                </p>
+            </section>
 
-    </main>
+        </main>
+    </div>
 
-    <footer class="bg-stone-100 py-12 border-t border-stone-200 mt-auto">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <p class="text-stone-500 text-xs font-bold uppercase tracking-widest">Texas Tech University Online</p>
-            <p class="text-stone-400 text-[10px] mt-2 italic">"From Here, It’s Possible."</p>
+    <footer class="bg-stone-900 text-stone-500 py-12 mt-auto border-t border-stone-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm">Texas Tech University Online • Cheri Whalen, M.S.</p>
+            <p class="text-xs mt-2">Document ES26-D01 • 2026 Instructional Syllabus</p>
         </div>
     </footer>
 
