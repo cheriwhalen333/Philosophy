@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMPA 3301 | Professional Course Repository</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafaf9; /* stone-50 */
+            color: #1c1917; /* stone-900 */
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .ttu-gradient {
+            background: linear-gradient(135deg, #1c1917 0%, #44403c 100%);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Hero Header -->
+    <header class="ttu-gradient text-white py-16 sm:py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">CMPA 3301</h1>
+            <p class="text-xl text-stone-300 font-light mb-8 uppercase tracking-widest">Fundamentals of Computing Applications</p>
+            <div class="h-1 w-24 bg-red-700 mx-auto rounded-full"></div>
+            <p class="mt-8 text-stone-400 text-sm italic">Instructional Repository • Texas Tech University</p>
+        </div>
+    </header>
+
+    <!-- Main Navigation / Content -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
+        
+        <!-- Instructor Card -->
+        <div class="bg-white rounded-xl shadow-xl p-6 sm:p-8 border border-stone-200 mb-12">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="h-16 w-16 rounded-full bg-stone-100 border-2 border-red-800 flex items-center justify-center text-red-800 font-bold text-xl">
+                        CW
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-stone-900">Cheri Whalen, M.S.</h2>
+                        <p class="text-stone-500">Online Instructor • TTU Online</p>
+                    </div>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <a href="mailto:Cheri.Whalen@ttu.edu" class="inline-flex items-center px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 text-sm font-semibold rounded-lg transition-colors border border-stone-200">
+                        Contact via Email
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Repository Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            
+            <!-- FEATURED: Pedagogical Defense -->
+            <div class="bg-white rounded-xl border border-stone-200 card-hover overflow-hidden flex flex-col">
+                <div class="bg-red-800 h-2 w-full"></div>
+                <div class="p-8 flex-grow">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-2 py-1 bg-red-50 text-red-800 text-[10px] font-bold uppercase rounded tracking-wider">Interactive Dossier</span>
+                        <span class="text-stone-400 text-xs italic">Updated 2026</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-stone-900 mb-3">Pedagogical Defense: GEM Integration</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-6">
+                        An interactive analysis of AI-assisted grading, student feedback latency, and secure privacy architecture within the CMPA 3301 curriculum.
+                    </p>
+                    <a href="Pedagogical_Defense_App.html" class="inline-flex items-center text-red-800 font-bold text-sm hover:translate-x-1 transition-transform">
+                        Launch Presentation <span class="ml-2">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- COURSE INFO: Syllabus / Objectives -->
+            <div class="bg-white rounded-xl border border-stone-200 card-hover overflow-hidden flex flex-col">
+                <div class="bg-stone-800 h-2 w-full"></div>
+                <div class="p-8 flex-grow">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-2 py-1 bg-stone-100 text-stone-600 text-[10px] font-bold uppercase rounded tracking-wider">Course Reference</span>
+                        <span class="text-stone-400 text-xs italic">ES26-D01</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-stone-900 mb-3">Course Syllabus & Goals</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-6">
+                        Fundamental concepts of computing applications, emerging practices, and the professional project management lifecycle.
+                    </p>
+                    <div class="flex space-x-4">
+                        <span class="text-stone-400 text-xs flex items-center">
+                            <span class="w-1.5 h-1.5 bg-stone-300 rounded-full mr-2"></span> Semantic HTML
+                        </span>
+                        <span class="text-stone-400 text-xs flex items-center">
+                            <span class="w-1.5 h-1.5 bg-stone-300 rounded-full mr-2"></span> GitHub Workflow
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Mission Statement -->
+        <div class="text-center max-w-2xl mx-auto mb-20">
+            <h4 class="text-stone-400 text-xs font-bold uppercase tracking-[0.2em] mb-4">Teaching Philosophy</h4>
+            <p class="text-stone-600 italic leading-relaxed">
+                "Harnessing emerging technologies to amplify the authentic voice of the student, ensuring every learning outcome is met with precision, equity, and insight."
+            </p>
+        </div>
+
+    </main>
+
+    <!-- Simple Footer -->
+    <footer class="bg-stone-100 border-t border-stone-200 py-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="text-sm text-stone-500">&copy; 2026 Cheri Whalen, M.S. • Texas Tech University</p>
+            <p class="text-[10px] text-stone-400 mt-2 tracking-widest uppercase">From Here, It’s Possible.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
